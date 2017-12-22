@@ -16,7 +16,7 @@ class CreateRakesTable extends Migration
         Schema::create('rakes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('railway',16);
-            $table->integer('rake_num')->unique();
+            $table->string('rake_num',16)->unique();
             $table->timestamps();
         });
     }
