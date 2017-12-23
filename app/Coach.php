@@ -15,14 +15,14 @@ class Coach extends Model
     protected $hidden=['created_at','updated_at'];
     public function rake()
     {
-    	$this->belongsTo(Rake::class);
+    	return $this->belongsTo(Rake::class);
     }
     public function status()
     {
-    	$this->hasOne(CoachStatus::class);
+    	return $this->hasOne(CoachStatus::class);
     }
     public function position()
     {
-    	$this->hasOne(Position::class);
+    	return $this->hasOne(Position::class);
     }
 }

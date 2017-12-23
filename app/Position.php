@@ -12,6 +12,6 @@ class Position extends Model
     protected $hidden=['created_at','updated_at'];
     public function coach()
     {
-    	$this->belongsTo(Coach::class);
+    	return $this->belongsTo(Coach::class);
     }
 }
