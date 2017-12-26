@@ -19,7 +19,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	Route::post('logout','LoginController@logout');
 
 	//User Routes
-	Route::post('user/new','UserController@store');
+	Route::post('user/new','UserController@store');//Only admin can add new users.
 	Route::post('user/getProfile', 'UserController@getProfile');
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
