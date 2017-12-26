@@ -38,7 +38,8 @@ class LoginController extends Controller
 	    			{
 	    				$message =  $user->name." has logged in";
 	    				$status_code = 200;
-	    				$token = password_hash($username,PASSWORD_DEFAULT).password_hash($password,PASSWORD_DEFAULT).password_hash(env('API_SECRET'),PASSWORD_DEFAULT);
+
+	    				$token = password_hash($username.$password.env('API_SECRET'),PASSWORD_DEFAULT);
 	    				$user->update(['token' => $token]);
 						$data=[
 						'token' => $token,
