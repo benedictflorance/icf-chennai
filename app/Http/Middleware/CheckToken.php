@@ -18,8 +18,8 @@ class CheckToken
         $token=$request->input('token');
         if($token)
         {
-            $result=User::where('token','=',$token);
-            if($result->count())
+            $user=User::where('token','=',$token);
+            if($user->count())
 
                 return $next($request);
             else
