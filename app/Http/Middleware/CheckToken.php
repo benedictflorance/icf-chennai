@@ -24,21 +24,23 @@ class CheckToken
                 return $next($request);
             else
             { 
-                $message="Invalid Token";
-                $status_code=401; // Unauthorized
-                return  response(['errors'=>
-                ["status" => $status_code,
-                "title" => $message]
+              $errors[]=[
+                'title' => 'Invalid Token',
+                ];
+            return  response([
+                'errors' => $errors,
+                'status' => 401,
                 ]);
             }
         }
         else
         {
-            $message="Token Missing";
-            $status_code=400; // Bad Request
-            return  response(['errors'=>
-                ["status" => $status_code,
-                "title" => $message]
+            $errors[]=[
+                'title' => 'Token Missing',
+                ];
+            return  response([
+                'errors' => $errors,
+                'status' => 401,
                 ]);
         }
     }

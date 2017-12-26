@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTokenToUsers extends Migration
+class AddApitokenToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddTokenToUsers extends Migration
     {
         //
         Schema::table('users', function ($table) {
-            $table->string('token',255);
+            $table->string('token',255)->nullable();
          });
     }
 
