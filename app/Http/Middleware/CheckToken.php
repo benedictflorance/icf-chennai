@@ -26,22 +26,22 @@ class CheckToken
             { 
               $errors[]=[
                 'title' => 'Invalid Token',
-                ];
+            ];
             return  response([
                 'errors' => $errors,
                 'status' => 401,
-                ]);
-            }
-        }
-        else
-        {
-            $errors[]=[
-                'title' => 'Token Missing',
-                ];
-            return  response([
-                'errors' => $errors,
-                'status' => 400,
-                ]);
+            ]);
         }
     }
+    else
+    {
+        $errors[]=[
+            'title' => 'Token Missing',
+        ];
+        return  response([
+            'errors' => $errors,
+            'status' => 400,
+        ]);
+    }
+}
 }
