@@ -20,7 +20,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 
 	//User Routes
 	Route::post('user/new','UserController@store');//Only admin can add new users.
-	Route::post('user/getProfile', 'UserController@getProfile');
+	Route::post('user/getprofile', 'UserController@getProfile');
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
 	Route::post('rakes/getall', 'RakeController@getAll');

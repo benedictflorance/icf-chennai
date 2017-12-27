@@ -26,9 +26,8 @@ class UserController extends Controller
                 if($validator->fails())
                 {
                     $errors = $validator->errors();
-                    $status = 400; //Bad Request
                     return response(["errors" => $errors,
-                    "status" => $status]);
+                    "status" => 400]);
                 }
                 else
                 {
@@ -63,10 +62,28 @@ class UserController extends Controller
             }
         catch(Exception $error){
             $title = $error->getMessage();
-            $status=500;
             $errors[]=['title' => $title];
             return response(["errors" => $errors,
-                "status" => $status]);
+                "status" => 500]);
         }       
+    }
+
+    public function getProfile(Request $request)
+    {
+    	try{
+            $token=$request->input('token');
+            $user=User::where('token','=',$token)->first();
+            return response([
+            	'data' => $user,
+            	'status' => 200
+            ]);
+
+        }
+        catch(Exception $error){
+            $title = $error->getMessage();
+            $errors[]=['title' => $title];
+            return response(["errors" => $errors,
+                "status" => 500]);
+        }
     }
 }

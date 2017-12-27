@@ -40,7 +40,7 @@ class CheckToken
                 ];
             return  response([
                 'errors' => $errors,
-                'status' => 401,
+                'status' => 400,
                 ]);
         }
     }
