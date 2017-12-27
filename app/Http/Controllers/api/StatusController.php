@@ -125,4 +125,21 @@ class StatusController extends Controller
 				"status" => 500]);
 		}
 	}     
+	public function getall()
+	{
+		try
+		{ 
+			$statuses=CoachStatus::all();
+			foreach($statuses as $status)
+				$status->coach_num = Coach::where('id',$status->coach_id)->first()->coach_num;
+			return  response(['data' => $statuses,'status' => 200,]);  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}   
+	}
 }
