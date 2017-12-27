@@ -90,5 +90,32 @@ class CoachController extends Controller
 		}       
 	}
 
-	
+	public function getByNumber($coach_num)
+	{
+		try
+		{ 
+			$coach=Coach::where('coach_num',$coach_num)->first();
+			if($coach)
+			{
+				$coach->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
+				return  response(['data' => $coach,'status' => 200,]);
+			}
+			else{
+				$errors[]=[
+					'title' => 'Coach does not exist',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 400,
+				]);
+			}  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}    
+	}
 }
