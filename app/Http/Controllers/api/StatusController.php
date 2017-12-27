@@ -14,9 +14,9 @@ use App\Position;
 class StatusController extends Controller
 {
     //
-    public function store(Request $request){
-    	try{
-			$validator = Validator::make($request->all(),[
+	public function store(Request $request){
+		try{
+			$rules=[
 				'coach_num' => 'required|max:15',
 				'shell_rec' => 'sometimes|date_format:Y-m-d',
 				'intake' => 'sometimes|date_format:Y-m-d',
@@ -55,7 +55,13 @@ class StatusController extends Controller
 				'rake_form' => 'sometimes|date_format:Y-m-d',
 				'remarks'=> 'sometimes|string|max:65534',
 
-			]);
+			];
+			$fields=collect(['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks']);
+			echo $fields;
+			foreach ($fields as $field) {
+				$rules[$field] = 'required_without_all:' . implode(',', $fields->whereNotIn(null, [$field])->toArray());
+			}
+			$validator = Validator::make($request->all(),$rules);
 			if($validator->fails())
 			{
 				$errors = $validator->errors();
