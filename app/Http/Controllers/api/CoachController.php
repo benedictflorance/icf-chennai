@@ -74,4 +74,21 @@ class CoachController extends Controller
 				"status" => 500]);
 		}       
 	}
+	public function getAll(Request $request)
+	{
+		try
+		{ 
+			$coaches=Coach::all();
+			return  response(['data' => $coaches,'status' => 200,]);  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}       
+	}
+
+	
 }
