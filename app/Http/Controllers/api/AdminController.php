@@ -172,5 +172,62 @@ class AdminController extends Controller
                 "status" => 500]);
         }       
  	}
-
+	
+	public function getProfile(Request $request)
+ 	{
+ 		try
+ 		{
+                    $user=User::where('token','=',$request->input('token'))->first();
+                    if($user->role=='admin')
+                    {
+                    	$username = $request->input('username');
+                    	if($username)
+                    	{
+	                   		$profile=User::where(['username' => $username])->first();
+	                   		if($profile)
+		                   		return  response([
+				                'data' => $profile,
+				                'status' => 200,
+				                ]);
+		                   	else
+		                   	{
+			                   	$errors[]=[
+				                'title' => 'User does not exist',
+				                ];
+				            	return  response([
+				                'errors' => $errors,
+				                'status' => 400,
+				                ]);
+		                   	}
+                   		}
+                   		else
+                   		{
+			                $errors[]=[
+			                'title' => 'Username is required',
+			                ];
+			            	return  response([
+			                'errors' => $errors,
+			                'status' => 401,
+			                ]);
+                   		}
+                    }
+                   else
+                   {
+		                $errors[]=[
+		                'title' => 'Unauthorized to get user profile',
+		                ];
+		            	return  response([
+		                'errors' => $errors,
+		                'status' => 401,
+		                ]);
+                   }
+        }
+            
+        catch(Exception $error){
+            $title = $error->getMessage();
+            $errors[]=['title' => $title];
+            return response(["errors" => $errors,
+                "status" => 500]);
+        }       
+ 	}
 }

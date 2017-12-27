@@ -20,8 +20,10 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 
 	//Admin Routes
 	Route::post('admin/newuser','AdminController@store');
-	Route::post('admin/editprofile', 'AdminController@editProfile');
+	Route::post('admin/edituser', 'AdminController@editProfile');
 	Route::post('admin/getall', 'AdminController@getAllProfiles');
+	Route::post('admin/getuser', 'AdminController@getProfile');
+
 
 	//User Controller
 	Route::post('user/profile', 'UserController@getProfile');
