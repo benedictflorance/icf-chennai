@@ -106,8 +106,7 @@ class AdminController extends Controller
 	                                        ]);
 	                        $message=$profile->name." has been updated";
 	                        $data=['message' => $message];
-	                        $status=200;
-	                        return response(["data" => $data, "status" => $status]);
+	                        return response(["data" => $data, "status" => 200]);
                     	}
                     	else
                     	{
@@ -140,5 +139,38 @@ class AdminController extends Controller
                 "status" => 500]);
         }       
     }
+
+ 	public function getAllProfiles(Request $request)
+ 	{
+ 		try
+ 		{
+                    $user=User::where('token','=',$request->input('token'))->first();
+                    if($user->role=='admin')
+                    {
+                   		$users=User::all();
+                   		return  response([
+		                'data' => $users,
+		                'status' => 200,
+		                ]);
+                    }
+                   else
+                   {
+		                $errors[]=[
+		                'title' => 'Unauthorized to get user profile',
+		                ];
+		            	return  response([
+		                'errors' => $errors,
+		                'status' => 401,
+		                ]);
+                   }
+        }
+            
+        catch(Exception $error){
+            $title = $error->getMessage();
+            $errors[]=['title' => $title];
+            return response(["errors" => $errors,
+                "status" => 500]);
+        }       
+ 	}
 
 }
