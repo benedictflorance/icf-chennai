@@ -18,9 +18,15 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	//Authentication Routes
 	Route::post('logout','LoginController@logout');
 
-	//User Routes
-	Route::post('user/new','UserController@store');//Only admin can add new users.
-	Route::post('user/getprofile', 'UserController@getProfile');
+	//Admin Routes
+	Route::post('admin/newuser','AdminController@store');
+	Route::post('admin/editprofile', 'AdminController@editProfile');
+	Route::post('admin/getall', 'AdminController@getAllProfiles');
+
+	//User Controller
+	Route::post('user/profile', 'UserController@getProfile');
+	Route::post('user/editprofile','UserController@edit');
+
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
 	Route::post('rakes/getall', 'RakeController@getAll');
