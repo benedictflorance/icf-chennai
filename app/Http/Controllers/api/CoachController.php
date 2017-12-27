@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Coach;
 use App\Rake;
 use App\User;
+use App\CoachStatus;
+use App\Position;
 use Validator;
 
 class CoachController extends Controller
@@ -79,6 +81,8 @@ class CoachController extends Controller
 		try
 		{ 
 			$coaches=Coach::all();
+			foreach($coaches as $coach)
+				$coach->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
 			return  response(['data' => $coaches,'status' => 200,]);  
 		}
 
@@ -99,6 +103,49 @@ class CoachController extends Controller
 			{
 				$coach->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
 				return  response(['data' => $coach,'status' => 200,]);
+			}
+			else{
+				$errors[]=[
+					'title' => 'Coach does not exist',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 400,
+				]);
+			}  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}    
+	}
+	public function getStatus($coach_num)
+	{
+		try
+		{ 
+			$coach=Coach::where('coach_num',$coach_num)->first();
+			if($coach)
+			{
+				$coach_id = $coach->id;
+				$status = CoachStatus::where('coach_id',$coach_id)->first();
+				if($status)
+				{
+					$status->coach_num = $coach->coach_num;
+					$status->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
+					return  response(['data' => $status,'status' => 200,]);
+				}
+				else{
+				$errors[]=[
+					'title' => 'Status does not exist for this coach',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 400,
+				]);
+			}  
 			}
 			else{
 				$errors[]=[
