@@ -165,4 +165,47 @@ class CoachController extends Controller
 				"status" => 500]);
 		}    
 	}
+	public function getPosition($coach_num)
+	{
+		try
+		{ 
+			$coach=Coach::where('coach_num',$coach_num)->first();
+			if($coach)
+			{
+				$coach_id = $coach->id;
+				$position = Position::where('coach_id',$coach_id)->first();
+				if($position)
+				{
+					$position->coach_num = $coach->coach_num;
+					$position->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
+					return  response(['data' => $position,'status' => 200,]);
+				}
+				else{
+				$errors[]=[
+					'title' => 'Position does not exist for this coach',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 400,
+				]);
+			}  
+			}
+			else{
+				$errors[]=[
+					'title' => 'Coach does not exist',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 400,
+				]);
+			}  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}    
+	}
 }
