@@ -18,9 +18,9 @@ class AdminController extends Controller
         'username' => 'required|max:127',
         'password' => 'required|max:127',
         'role' => 'required|max:127',
-        'position' => 'required|max:127',
-        'email' => 'required|email|max:127',
-        'mobile' => 'required|digits:10|numeric',
+        'position' => 'nullable|max:127',
+        'email' => 'nullable|email|max:127',
+        'mobile' => 'nullable|digits:10|numeric',
         'token' => 'required|max:60'
     ]);
     if($validator->fails())
@@ -76,9 +76,9 @@ public function editProfile(Request $request)
         'username' => 'required|max:127',
         'password' => 'required|max:127',
         'role' => 'required|max:127',
-        'position' => 'required|max:127',
-        'email' => 'required|email|max:127',
-        'mobile' => 'required|digits:10|numeric',
+        'position' => 'nullable|max:127',
+        'email' => 'nullable|email|max:127',
+        'mobile' => 'nullable|digits:10|numeric',
         'token' => 'required|max:60'
     ]);
     if($validator->fails())
