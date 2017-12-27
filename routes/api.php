@@ -27,7 +27,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 
 	//User Controller
 	Route::post('user/profile', 'UserController@getProfile');
-	Route::post('user/editprofile','UserController@edit');
+	Route::post('user/editprofile','UserController@editProfile');
 
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
