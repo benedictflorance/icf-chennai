@@ -32,15 +32,15 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
 	Route::post('rakes/getall', 'RakeController@getAll');
-	Route::post('rakes/{id}', 'RakeController@getByNumber' );
-	Route::post('rakes/{id}/coaches','RakeController@getAllCoaches');
+	Route::post('rakes/{rake_num}', 'RakeController@getByNumber' );
+	Route::post('rakes/{rake_num}/coaches','RakeController@getAllCoaches');
 
 	//Coach Routes
 	Route::post('coaches/new', 'CoachController@store');
 	Route::post('coaches/getall', 'CoachController@getAll');
-	Route::post('coaches/{id}', 'CoachController@getByNumber' );
-	Route::post('coaches/{id}/status', 'CoachController@getStatus');
-	Route::post('coaches/{id}/position', 'CoachController@getPosition');
+	Route::post('coaches/{coach_num}', 'CoachController@getByNumber' );
+	Route::post('coaches/{coach_num}/status', 'CoachController@getStatus');
+	Route::post('coaches/{coach_num}/position', 'CoachController@getPosition');
 	//Coach Status Routes
 	Route::post('status/new', 'StatusController@store');
 	Route::post('status/getall', 'StatusController@getAll');

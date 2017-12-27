@@ -72,4 +72,30 @@ class RakeController extends Controller
 				"status" => 500]);
 		}       
 	}
+
+	public function getByNumber($rake_num)
+	{
+		try
+		{ 
+			$rake=Rake::where('rake_num',$rake_num)->first();
+			if($rake)
+			return  response(['data' => $rake,'status' => 200,]);
+			else{
+				$errors[]=[
+						'title' => 'Rake does not exist',
+					];
+					return  response([
+						'errors' => $errors,
+						'status' => 400,
+					]);
+			}  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}    
+	}
 }
