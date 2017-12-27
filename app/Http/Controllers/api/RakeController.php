@@ -159,4 +159,35 @@ class RakeController extends Controller
 				"status" => 500]);
 		} 
 	}
+	public function getAllPositions($rake_num)
+	{
+		try
+		{ 
+			$rake=Rake::where('rake_num',$rake_num)->first();
+			if($rake)
+				return  response(['data' => $rake->coaches->map(function($coach){
+					if(isset($coach->position))
+					{
+						$coach->position->coach_num = $coach->coach_num;
+						return $coach->position;
+					}
+				}),'status' => 200,]);
+			else{
+				$errors[]=[
+					'title' => 'Rake does not exist',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 400,
+				]);
+			}  
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		} 
+	}
 }
