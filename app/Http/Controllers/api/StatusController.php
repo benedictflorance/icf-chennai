@@ -130,7 +130,11 @@ class StatusController extends Controller
 		{ 
 			$statuses=CoachStatus::all();
 			foreach($statuses as $status)
-				$status->coach_num = Coach::where('id',$status->coach_id)->first()->coach_num;
+				{
+					$coach=Coach::where('id',$status->coach_id)->first();
+					$status->coach_num = $coach->coach_num;
+					$status->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
+			    }
 			return  response(['data' => $statuses,'status' => 200,]);  
 		}
 
