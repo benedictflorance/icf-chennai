@@ -7,6 +7,16 @@
 - `status` key has `200` for a successful request, `400` for a bad request, `401` for an unauthorized request and `500` for an internal server error.
 - All API requests except the login route must be made with the token.
 
+### Notes for the App
+- [ ] All dates parameter in the request must be of the format yyyy-mm-dd
+- [ ] In the new user registration page, make dropdowns for the role key with the values "admin", "write", "read".
+- [ ] Send the token key for all the API requests except the login route.
+- [ ] In the new rake registration page, make dropdowns for railway key with the railway zone code values
+- [ ] In the new coach registration page, make dropdown for the rake number key (get the list of rake numbers for the current rakes)
+- [ ] In the coach registration page, make dropdown for the type key with the values "trailer", "driving", "motor" and "handicapped"
+- [ ] In the new coach status and position page, make dropdown for the coach number key (get the list of coach numbers for the current coaches)
+- [ ] In the shell received page display the list of coaches present in the shell received line plus the paint shop and the total quantity.
+
 ### POST Routes
 
 Path                               |  Description
