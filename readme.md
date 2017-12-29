@@ -1,10 +1,11 @@
 # ICF Chennai
 
 ## Route Documentation
-- Adjust the base url of the JSON API requests to the url where the website is hosted.
+- Adjust the base URL of the API requests to the URL where the website is hosted.
 - Every response is a JSON object with either of the two keys `data` and `errors` and a `status` key.
 - Every `errors` key is an object consisting of multiple errors with each error having a `title` key.
 - `status` key has `200` for a successful request, `400` for a bad request, `401` for an unauthorized request and `500` for an internal server error.
+- All API requests except the login route must be made with the token.
 
 ### POST Routes
 
@@ -151,7 +152,7 @@ Path                               |  Description
      }
 #### Response 
     {
-    "data": [
+    "data": 
         {
             "name": string,
             "username": string,
@@ -159,7 +160,45 @@ Path                               |  Description
             "position": string,
             "email": email,
             "mobile": numeric
-        }
-    ],
+        },
+    "status": 200
+    }
+### POST /api/user/profile
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response 
+    {
+    "data": 
+        {
+            "name": string,
+            "username": string,
+            "role": string,
+            "position": string,
+            "email": email,
+            "mobile": numeric
+        },
+    "status": 200
+    }
+### POST /api/user/editprofile
+#### Parameters
+> User cannot change his password. He/She needs to request the admin.
+
+> Position, E-mail and Mobile are optional.
+
+    {
+     "token": string,
+     "name": string,
+     "role": string,
+     "position": string,
+     "email": email,
+     "mobile" numeric,
+     }
+ #### Response
+    {
+    "data": {
+        "message": string
+    },
     "status": 200
     }
