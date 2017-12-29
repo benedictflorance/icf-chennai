@@ -182,11 +182,11 @@ Path                               |  Description
     "status": 200
     }
 ### POST /api/user/editprofile
-#### Parameters
 > User cannot change his password. He/She needs to request the admin.
 
 > Position, E-mail and Mobile are optional.
 
+#### Parameters
     {
      "token": string,
      "name": string,
@@ -200,5 +200,195 @@ Path                               |  Description
     "data": {
         "message": string
     },
+    "status": 200
+    }
+### POST /api/rakes/new
+> Only "write" and "admin" role users can add new rakes
+#### Parameters
+    {
+     "token": string,
+     "railway": string,
+     "rake_num": string,
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+ ### POST /api/rakes/getall
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response 
+> Considering only 2 rakes
+
+    {
+    "data": [
+        {
+            "railway": string,
+            "rake_num": string
+        },
+        {
+            "railway": string,
+            "rake_num": string
+        },        
+    ],
+    "status": 200
+}
+### POST /api/rakes/{rake_num}
+> Replace {rake_num} with the rake number
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response
+    {
+    "data": {
+        "railway": string,
+        "rake_num": string
+    },
+    "status": 200
+    }
+### POST /api/rakes/{rake_num}/coaches
+> Replace {rake_num} with the rake number
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response
+> Considering only 2 coaches are present in the rake
+    
+    {
+    "data": [
+        {
+            "coach_num": string,
+            "type": string
+        },
+        {
+            "coach_num": string,
+            "type": string
+        },
+    ],
+    "status": 200
+    }
+### POST /api/rakes/{rake_num}/statuses
+> Replace {rake_num} with the rake number
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response
+> Considering only 2 statuses
+
+> All date formats must be yyyy-mm-dd
+
+    {
+    "data": [
+        {
+            "shell_rec": date/null,
+            "intake": date/null,
+            "agency": string/null,
+            "conduit": date/null,
+            "coupler": date/null,
+            "ew_panel": date/null,
+            "roof_tray": date/null,
+            "ht_tray": date/null,
+            "ht_equip": date/null,
+            "high_dip": date/null,
+            "uf_tray": date/null,
+            "uf_trans": date/null,
+            "uf_wire": string/null,
+            "off_roof": date/null,
+            "roof_clear": date/null,
+            "off_ew": date/null,
+            "ew_clear": date/null,
+            "mech_pan": string/null,
+            "off_tf": date/null,
+            "tf_clear": date/null,
+            "tf_prov": date/null,
+            "lf_load": date/null,
+            "off_pow": date/null,
+            "power_hv": date/null,
+            "off_dip": date/null,
+            "dip_clear": date/null,
+            "lower": date/null,
+            "off_cont": date/null,
+            "cont_hv": date/null,
+            "load_test": date/null,
+            "rmvu": date/null,
+            "panto": date/null,
+            "pcp_clear": date/null,
+            "bu_form": date/null,
+            "rake_form": date/null,
+            "remarks": string/null,
+            "coach_num": string/null
+        },
+        {
+            "shell_rec": date/null,
+            "intake": date/null,
+            "agency": string/null,
+            "conduit": date/null,
+            "coupler": date/null,
+            "ew_panel": date/null,
+            "roof_tray": date/null,
+            "ht_tray": date/null,
+            "ht_equip": date/null,
+            "high_dip": date/null,
+            "uf_tray": date/null,
+            "uf_trans": date/null,
+            "uf_wire": string/null,
+            "off_roof": date/null,
+            "roof_clear": date/null,
+            "off_ew": date/null,
+            "ew_clear": date/null,
+            "mech_pan": string/null,
+            "off_tf": date/null,
+            "tf_clear": date/null,
+            "tf_prov": date/null,
+            "lf_load": date/null,
+            "off_pow": date/null,
+            "power_hv": date/null,
+            "off_dip": date/null,
+            "dip_clear": date/null,
+            "lower": date/null,
+            "off_cont": date/null,
+            "cont_hv": date/null,
+            "load_test": date/null,
+            "rmvu": date/null,
+            "panto": date/null,
+            "pcp_clear": date/null,
+            "bu_form": date/null,
+            "rake_form": date/null,
+            "remarks": string/null,
+            "coach_num": string
+        },
+    ],
+    "status": 200
+    }
+### POST /api/rakes/{rake_num}/positions
+> Replace {rake_num} with the rake number
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response
+> Considering only 2 positions
+
+    {
+    "data": [
+        {
+            "line": string,
+            "stage": integer/null,
+            "coach_num": string
+        },
+        {
+            "line": string,
+            "stage": integer/null,
+            "coach_num": string
+        },
+    ],
     "status": 200
     }
