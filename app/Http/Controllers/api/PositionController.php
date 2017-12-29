@@ -96,8 +96,12 @@ class PositionController extends Controller
 		{ 
 			$positions=Position::all();
 			foreach($positions as $position)
-				$position->coach_num = Coach::where('id',$position->coach_id)->first()->coach_num;
-			return  response(['data' => $positions,'status' => 200,]);  
+			{
+				$coach = Coach::where('id',$position->coach_id)->first();
+				$position->coach_num = $coach->coach_num;
+				$position->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
+			}
+			    return  response(['data' => $positions,'status' => 200,]); 
 		}
 
 		catch(Exception $error){

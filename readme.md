@@ -662,3 +662,46 @@ Path                               |  Description
     ],
     "status": 200
     }
+### POST /api/position/new
+> This route is used both for adding a new status and editing an existing status
+
+> Stage key is optional.
+
+#### Parameters
+    {
+    "token": string,
+    "coach_num": string,
+    "line": string,
+    "stage": integer
+    }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/position/getall
+> Considering only two positions
+  #### Parameters
+     {
+     "token": string,
+     }
+  #### Response
+      {
+    "data": [
+        {
+            "line": string,
+            "stage": integer,
+            "coach_num": string,
+            "rake_num": string
+        },
+        {
+            "line": string,
+            "stage": integer,
+            "coach_num": string,
+            "rake_num": string
+        },
+    ],
+    "status": 200
+    }
