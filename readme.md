@@ -33,3 +33,35 @@ Path                               |  Description
 `/api/status/getall`               | Route for getting all the statuses
 `/api/position/new`                | Route for adding a new position/editing an existing position of a coach
 `/api/position/getall`             | Route for getting all the positions
+
+### POST /api/login
+
+#### Parameters
+    {
+    "username": string,
+    "password": string
+    }
+    
+#### Response
+    {
+    "data": {
+        "token": string,
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/logout
+
+#### Parameters
+     {
+     "token": string
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+
+    
