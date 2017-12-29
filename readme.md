@@ -63,5 +63,103 @@ Path                               |  Description
     },
     "status": 200
     }
+### POST /api/admin/newuser
+> Admin can add new users
 
+> Role should be "read"/"write"/"admin". "read" role allows only read access. "write" role allows adding new rakes, coaches, positions and statuses. "admin" role allows write access and access for adding new users, editing a user's profile and credentials.
+
+> Position means the rank of job eg. SSE or AWM
+
+> Position, E-Mail and Mobile are optional
+
+#### Parameters
+
+     {
+     "token": string,
+     "name": string,
+     "password": string,
+     "role": string,
+     "position": string,
+     "email": email,
+     "mobile" numeric,
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
     
+### POST /api/admin/edituser
+
+> Admin can edit user profile including credentials
+
+#### Parameters
+    {
+     "token": string,
+     "name": string,
+     "password": string,
+     "role": string,
+     "position": string,
+     "email": email,
+     "mobile" numeric,
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/admin/getall
+
+> Admin can get all the users' profile
+#### Parameters
+     {
+     "token": string
+     }
+#### Response 
+> Considering only 2 users
+
+    {
+    "data": [
+        {
+            "name": string,
+            "username": string,
+            "role": string,
+            "position": string,
+            "email": email,
+            "mobile": numeric
+        },
+        {
+            "name": string,
+            "username": string,
+            "role": string,
+            "position": string,
+            "email": email,
+            "mobile": numeric
+        },
+    ],
+    "status": 200
+    }
+ ### POST /api/admin/getuser
+ #### Parameters
+     {
+     "token": string,
+     "username": string
+     }
+#### Response 
+    {
+    "data": [
+        {
+            "name": string,
+            "username": string,
+            "role": string,
+            "position": string,
+            "email": email,
+            "mobile": numeric
+        }
+    ],
+    "status": 200
+    }
