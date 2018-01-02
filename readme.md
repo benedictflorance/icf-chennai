@@ -390,13 +390,15 @@ Path                               |  Description
     {
     "data": [
         {
-            "line": string,
+            "linename": string,
             "stage": integer/null,
+            "lineno":integer/null,
             "coach_num": string
         },
         {
-            "line": string,
+            "linename": string,
             "stage": integer/null,
+            "lineno":integer/null,
             "coach_num": string
         },
     ],
@@ -518,8 +520,9 @@ Path                               |  Description
 #### Response
     {
     "data": {
-        "line": string,
+        "linename": string,
         "stage": string/null,
+        "lineno": integer/null,
         "coach_num": string,
         "rake_num": string
     },
@@ -675,13 +678,14 @@ Path                               |  Description
 ### POST /api/position/new
 > This route is used both for adding a new status and editing an existing status
 
-> Stage key is optional.
+> `coach_num` is required. Out of the other 3 parameters, at least one parameter must be sent in the request.
 
 #### Parameters
     {
     "token": string,
     "coach_num": string,
-    "line": string,
+    "linename": string,
+    "lineno": integer,
     "stage": integer
     }
 #### Response
@@ -701,14 +705,16 @@ Path                               |  Description
       {
     "data": [
         {
-            "line": string,
-            "stage": integer,
+            "linename": string,
+            "stage": integer/null,
+            "lineno": integer/null,
             "coach_num": string,
             "rake_num": string
         },
         {
-            "line": string,
-            "stage": integer,
+            "linename": string,
+            "stage": integer/null,
+            "lineno": integer/null,
             "coach_num": string,
             "rake_num": string
         },

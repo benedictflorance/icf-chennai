@@ -18,11 +18,12 @@ class PositionController extends Controller
 		try{
 			$rules=[
 				'coach_num' => 'required|max:15',
-				'line' => 'max:127',
+				'linename' => 'max:127',
+				'lineno' => 'integer|digits_between:1,2',
 				'stage' => 'numeric|digits_between:1,2'
 
 			];
-			$fields=collect(['line','stage']);
+			$fields=collect(['linename','lineno','stage']);
 			foreach ($fields as $field) {
 				$rules[$field].= '|required_without_all:' . implode(',', $fields->whereNotIn(null, [$field])->toArray());
 			}
@@ -45,13 +46,13 @@ class PositionController extends Controller
 						$status = Position::where('coach_id',$coach_id)->first();
 						if($status)
 						{
-							$data = $request->only(['line','stage']);
+							$data = $request->only(['linename','lineno','stage']);
 							Position::where('coach_id',$coach_id)->first()->update($data);
 							$message="Position has been updated successfully for ".$coach->coach_num;
 						}
 						else
 						{
-							$data = array_merge($request->only(['line','stage']), ['coach_id' => $coach_id]);
+							$data = array_merge($request->only(['linename','lineno','stage']), ['coach_id' => $coach_id]);
 							Position::create($data);
 							$message="Position has been added successfully for ".$coach->coach_num;
 

@@ -8,7 +8,7 @@ use App\Coach;
 class Position extends Model
 {
     //
-    protected $fillable=['coach_id','line','stage'];
+    protected $fillable=['coach_id','linename','lineno','stage'];
     protected $hidden=['id','coach_id','created_at','updated_at'];
     public function coach()
     {
