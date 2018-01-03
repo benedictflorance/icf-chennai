@@ -98,6 +98,7 @@ class CoachController extends Controller
 	{
 		try
 		{ 
+			$coach_num=str_replace('_','/',$coach_num);
 			$coach=Coach::where('coach_num',$coach_num)->first();
 			if($coach)
 			{
@@ -126,6 +127,7 @@ class CoachController extends Controller
 	{
 		try
 		{ 
+			$coach_num=str_replace('_','/',$coach_num);
 			$coach=Coach::where('coach_num',$coach_num)->first();
 			if($coach)
 			{
@@ -169,6 +171,7 @@ class CoachController extends Controller
 	{
 		try
 		{ 
+			$coach_num=str_replace('_','/',$coach_num);
 			$coach=Coach::where('coach_num',$coach_num)->first();
 			if($coach)
 			{

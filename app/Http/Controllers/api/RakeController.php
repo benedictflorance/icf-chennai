@@ -80,6 +80,7 @@ class RakeController extends Controller
 	{
 		try
 		{ 
+			$rake_num=str_replace('_','/',$rake_num);
 			$rake=Rake::where('rake_num',$rake_num)->first();
 			if($rake)
 				return  response(['data' => $rake,'status' => 200,]);
@@ -106,6 +107,7 @@ class RakeController extends Controller
 	{
 		try
 		{ 
+			$rake_num=str_replace('_','/',$rake_num);
 			$rake=Rake::where('rake_num',$rake_num)->first();
 			if($rake)
 				return  response(['data' => $rake->coaches,'status' => 200,]);
@@ -132,6 +134,7 @@ class RakeController extends Controller
 	{
 		try
 		{ 
+			$rake_num=str_replace('_','/',$rake_num);
 			$rake=Rake::where('rake_num',$rake_num)->first();
 			if($rake)
 				return  response(['data' => $rake->coaches->map(function($coach){
@@ -163,6 +166,7 @@ class RakeController extends Controller
 	{
 		try
 		{ 
+			$rake_num=str_replace('_','/',$rake_num);
 			$rake=Rake::where('rake_num',$rake_num)->first();
 			if($rake)
 				return  response(['data' => $rake->coaches->map(function($coach){
