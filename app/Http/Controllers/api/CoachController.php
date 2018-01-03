@@ -18,7 +18,7 @@ class CoachController extends Controller
 	{
 		try{
 			$validator = Validator::make($request->all(),[
-				'coach_num' => 'required|max:15',
+				'coach_num' => 'required|max:15|unique:coaches,coach_num',
 				'rake_num' => 'required|max:15',
 				'type' => 'required|max:15'
 			]);

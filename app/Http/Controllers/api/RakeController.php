@@ -19,7 +19,7 @@ class RakeController extends Controller
 		try{
 			$validator = Validator::make($request->all(),[
 				'railway' => 'required|max:15',
-				'rake_num' => 'required|max:15'
+				'rake_num' => 'required|max:15|unique:rakes,rake_num'
 			]);
 			if($validator->fails())
 			{

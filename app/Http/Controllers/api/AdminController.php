@@ -15,7 +15,7 @@ class AdminController extends Controller
   try{
     $validator = Validator::make($request->all(),[
         'name' => 'required|max:127',
-        'username' => 'required|max:127',
+        'username' => 'required|max:127|unique:users,username',
         'password' => 'required|max:127',
         'role' => 'required|max:127',
         'position' => 'nullable|max:127',
