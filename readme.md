@@ -16,6 +16,7 @@
 - [ ] In the coach registration page, make dropdown for the type key with the values "trailer", "driving", "motor" and "handicapped"
 - [ ] In the new coach status and position page, make dropdown for the coach number key (get the list of coach numbers for the current coaches)
 - [ ] In the shell received page display the list of coaches present in the shell received line plus the paint shop and the total quantity.
+- [ ] Convert / to _ if {rake_num} or {coach_num} is present in the URL
 
 ### POST Routes
 
@@ -31,11 +32,15 @@ Path                               |  Description
 `/api/user/editprofile`            | User Route for editing his/her profile
 `/api/rakes/new`                   | Route for adding a new rake
 `/api/rakes/getall`                | Route for getting all the rakes
+`api/rakes/edit`                   | Route for editing a particular rake
+`api/rakes/delete`                 | Route for deleting a particular rake
 `/api/rakes/{rake_num}`            | Route for getting a rake by it's number
 `/api/rakes/{rake_num}/coaches`    | Route for getting all the coaches of a rake number
 `/api/rakes/{rake_num}/statuses`   | Route for getting the statuses of all the coaches of a rake
 `/api/rakes/{rake_num}/positions`  | Route for getting the positions of all the coaches of a rake
-`/api/coaches/new`                 | Route for addin a new coach
+`/api/coaches/new`                 | Route for adding a new coach
+`api/coaches/edit`                 | Route for editing a particular coach
+`api/coaches/delete`               | Route for deleting a particular coach
 `/api/coaches/getall`              | Route for getting all the coaches
 `/api/coaches/{coach_num}`         | Route for getting a coach by its number
 `/api/coaches/{coach_num}/status`  | Route for getting the status of a coach
@@ -227,7 +232,40 @@ Path                               |  Description
     },
     "status": 200
     }
- ### POST /api/rakes/getall
+### POST /api/rakes/edit
+> Only "write" and "admin" role users can edit rakes
+
+> `old_rakenum` stands for the rake to be edited and it is required.
+
+> Out of `railway` and `rake_num`, atleast one paramater is required for editing.
+#### Parameters
+    {
+     "token": string,
+     "old_rakenum": string,
+     "railway": string,
+     "rake_num": string,
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/rakes/{rake_num}/delete
+> Replace {rake_num} with the rake number
+#### Parameters
+     {
+     "token": string,
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/rakes/getall
 #### Parameters
      {
      "token": string,
@@ -416,6 +454,40 @@ Path                               |  Description
     "type": string
     }
     
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/coaches/edit
+> Only "write" and "admin" role users can edit coaches
+
+> `old_coachnum` stands for the coach to be edited and is required.
+
+> Out of the other three parameters, atleast one paramater is required for editing.
+#### Parameters
+    {
+     "token": string,
+     "old_coachnum": string,
+     "coach_num": string,
+     "rake_num": string,
+     "type": string
+     }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+### POST /api/coaches/{coach_num}/delete
+> Replace {coach_num} with the coach number
+#### Parameters
+     {
+     "token": string,
+     }
 #### Response
     {
     "data": {
@@ -700,6 +772,39 @@ Path                               |  Description
   #### Parameters
      {
      "token": string,
+     }
+  #### Response
+      {
+    "data": [
+        {
+            "linename": string,
+            "stage": integer/null,
+            "lineno": integer/null,
+            "coach_num": string,
+            "rake_num": string
+        },
+        {
+            "linename": string,
+            "stage": integer/null,
+            "lineno": integer/null,
+            "coach_num": string,
+            "rake_num": string
+        },
+    ],
+    "status": 200
+    }
+### POST /api/position/getcoaches
+> Considering only two positions
+
+> `linename` is required
+
+> `lineno` and `stage` are optional
+  #### Parameters
+     {
+     "token": string,
+     "linename": string,
+     "lineno": integer,
+     "stage": integer
      }
   #### Response
       {
