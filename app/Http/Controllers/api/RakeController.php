@@ -60,6 +60,119 @@ class RakeController extends Controller
 				"status" => 500]);
 		}       
 	}
+	public function edit(Request $request)
+	{
+		try{
+			$validator = Validator::make($request->all(),[
+				'old_rakenum' => 'required|max:15',
+				'railway' => 'required_without:rake_num|max:15',
+				'rake_num' => 'required_without:railway|max:15|unique:rakes,rake_num'
+			]);
+			if($validator->fails())
+			{
+				$errors = $validator->errors();
+				return response(["errors" => $errors,
+					"status" => 400]);
+			}
+			else
+			{
+				$user=User::where('token','=',$request->input('token'))->first();
+				if($user->role == 'write' || $user->role == 'admin')
+				{
+					$rake=Rake::where('rake_num',$request->input('old_rakenum'))->first();
+					if($rake)
+						{
+							$rake->update($request->only(['railway', 'rake_num']));
+							$message="Rake details have been updated";
+							$data=['message' => $message];
+							$status=200;
+							return response(["data" => $data, "status" => $status]);
+						}
+					else{
+						$errors[]=[
+							'title' => 'Rake does not exist',
+						];
+						return  response([
+							'errors' => $errors,
+							'status' => 400,
+						]);
+					}  
+				}
+				else
+				{
+					$errors[]=[
+						'title' => 'Unauthorized to add new rakes',
+					];
+					return  response([
+						'errors' => $errors,
+						'status' => 401,
+					]);
+				}
+			}
+		}
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}       
+	}
+	public function delete($rake_num, Request $request)
+	{
+		try
+		{ 
+			$user=User::where('token','=',$request->input('token'))->first();
+			if($user->role == 'write' || $user->role == 'admin')
+			{
+				$rake_num=str_replace('_','/',$rake_num);
+				$rake=Rake::where('rake_num',$rake_num)->first();
+				if($rake)
+				{
+					$coaches = $rake->coaches;
+					foreach($coaches as $coach)
+					{
+						if($coach->status)
+							$coach->status->delete();
+						if($coach->position)
+							$coach->position->delete();
+						$coach->delete();
+					}
+					$rake->delete();
+					$message=$rake_num." has been deleted";
+					$data=['message' => $message];
+					$status=200;
+					return response(["data" => $data, "status" => $status]);
+				}
+				else
+				{
+					$errors[]=[
+						'title' => 'Rake does not exist',
+					];
+					return  response([
+						'errors' => $errors,
+						'status' => 400,
+					]);
+				}
+			}
+			else
+			{
+				$errors[]=[
+					'title' => 'Unauthorized to delete rakes',
+				];
+				return  response([
+					'errors' => $errors,
+					'status' => 401,
+				]);
+			} 
+		}
+
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}    
+	}
 	public function getAll(Request $request)
 	{
 		try

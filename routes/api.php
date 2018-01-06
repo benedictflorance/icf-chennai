@@ -32,7 +32,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
 	Route::post('rakes/edit', 'RakeController@edit');
-	Route::post('rakes/delete', 'RakeController@delete');
+	Route::post('rakes/{rake_num}/delete', 'RakeController@delete');
 	Route::post('rakes/getall', 'RakeController@getAll');
 	Route::post('rakes/{rake_num}', 'RakeController@getByNumber' );
 	Route::post('rakes/{rake_num}/coaches','RakeController@getAllCoaches');
@@ -42,7 +42,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	//Coach Routes
 	Route::post('coaches/new', 'CoachController@store');
 	Route::post('coaches/edit', 'CoachController@edit');
-	Route::post('coaches/delete', 'CoachController@delete');
+	Route::post('coaches/{coach_num}/delete', 'CoachController@delete');
 	Route::post('coaches/getall', 'CoachController@getAll');
 	Route::post('coaches/{coach_num}', 'CoachController@getByNumber' );
 	Route::post('coaches/{coach_num}/status', 'CoachController@getStatus');
@@ -53,11 +53,6 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	//Coach Position Routes
 	Route::post('position/new', 'PositionController@store');
 	Route::post('position/getall', 'PositionController@getAll');
-	Route::post('production/{line_no}/{stage_no}', 'PositionController@getProduction');
-	Route::post('commission/{line_no}', 'PostionController@getCommission');
-	Route::post('dispatch/{line_no}/{stage_no}', 'PositionController@getDespatch');
-	Route::post('paint/{line_no}','PositionController@getPaint');
-	Route::post('out/{line_no}', 'PositionController@getOut');
-	Route::post('shell', 'PositionController@getShell');
+	Route::post('position/getcoaches', 'PositionController@getCoaches');
 });
 

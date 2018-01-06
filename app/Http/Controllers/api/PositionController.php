@@ -112,4 +112,55 @@ class PositionController extends Controller
 				"status" => 500]);
 		}   
 	}
+
+	public function getCoaches(Request $request)
+	{
+		$validator = Validator::make($request->all(),
+			[
+				'linename' => 'required|max:127',
+				'lineno' => 'integer|digits_between:1,2',
+				'stage' => 'integer|digits_between:1,2'
+			]);
+			if($validator->fails())
+			{
+				$errors = $validator->errors();
+				return response(["errors" => $errors,
+					"status" => 400]);
+			}
+			else
+			{
+				try{
+					$linename = $request->input('linename');
+					$lineno = $request->input('lineno');
+					$stage = $request->input('stage');
+					if($lineno && $stage)
+						$positions=Position::where([
+							'linename' => $linename,
+							'lineno' => $lineno,
+							'stage' => $stage
+						])->get();
+					else if($lineno)
+						$positions=Position::where([
+							'linename' => $linename,
+							'lineno' => $lineno,
+						])->get();
+					else
+						$positions=Position::where([
+							'linename' => $linename
+						])->get();
+					foreach($positions as $position)
+					{
+						$coach = Coach::where('id',$position->coach_id)->first();
+						$position->coach_num = $coach->coach_num;
+						$position->rake_num = Rake::where('id',$coach->rake_id)->first()->rake_num;
+					}
+					return  response(['data' => $positions,'status' => 200,]); 
+					}
+				catch(Exception $error){
+					$title = $error->getMessage();
+					$errors[]=['title' => $title];
+					return response(["errors" => $errors,"status" => 500]);
+					} 
+			}
+	}
 }
