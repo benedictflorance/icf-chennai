@@ -41,6 +41,13 @@ class CoachController extends Controller
 							'coach_num' => $request->input('coach_num'),
 							'type' => $request->input('type') 
 						]);
+						CoachStatus::create([
+							'coach_id' => $coach->id
+						]);
+						Position::create([
+							'coach_id' => $coach->id,
+							'linename' => 'shell'
+						]);
 						$message=$coach->coach_num." has been added";
 						$data=['message' => $message];
 						$status=200;
