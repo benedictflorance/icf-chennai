@@ -19,7 +19,8 @@ class RakeController extends Controller
 		try{
 			$validator = Validator::make($request->all(),[
 				'railway' => 'required|max:15',
-				'rake_num' => 'required|max:15|unique:rakes,rake_num'
+				'rake_num' => 'required|max:15|unique:rakes,rake_num',
+				'despatch' => 'date_format:Y-m-d'
 			]);
 			if($validator->fails())
 			{
@@ -34,7 +35,8 @@ class RakeController extends Controller
 				{
 					$rake=Rake::create([
 						'railway' => $request->input('railway'),
-						'rake_num' => $request->input('rake_num') 
+						'rake_num' => $request->input('rake_num'),
+						'despatch' => $request->input('despatch') 
 					]);
 					$message=$rake->rake_num." has been added";
 					$data=['message' => $message];
@@ -65,8 +67,9 @@ class RakeController extends Controller
 		try{
 			$validator = Validator::make($request->all(),[
 				'old_rakenum' => 'required|max:15',
-				'railway' => 'required_without:rake_num|max:15',
-				'rake_num' => 'required_without:railway|max:15|unique:rakes,rake_num'
+				'railway' => 'required_without_all:rake_num,despatch|max:15',
+				'rake_num' => 'required_without_all:railway,despatch|max:15|unique:rakes,rake_num',
+				'despatch' => 'required_without_all:railway,rake_num|date_format:Y-m-d'
 			]);
 			if($validator->fails())
 			{
@@ -82,7 +85,7 @@ class RakeController extends Controller
 					$rake=Rake::where('rake_num',$request->input('old_rakenum'))->first();
 					if($rake)
 						{
-							$rake->update($request->only(['railway', 'rake_num']));
+							$rake->update($request->only(['railway', 'rake_num', 'despatch']));
 							$message="Rake details have been updated";
 							$data=['message' => $message];
 							$status=200;
@@ -188,7 +191,21 @@ class RakeController extends Controller
 				"status" => 500]);
 		}       
 	}
+	public function getDespatched(Request $request)
+	{
+		try
+		{ 
+			$rakes = Rake::whereNotNull('despatch')->get();
+			return  response(['data' => $rakes,'status' => 200]);  
+		}
 
+		catch(Exception $error){
+			$title = $error->getMessage();
+			$errors[]=['title' => $title];
+			return response(["errors" => $errors,
+				"status" => 500]);
+		}       
+	}
 	public function getByNumber($rake_num)
 	{
 		try

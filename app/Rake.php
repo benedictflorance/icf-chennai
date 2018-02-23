@@ -8,7 +8,7 @@ use App\Coach;
 class Rake extends Model
 {
     //
-    protected $fillable=['railway','rake_num'];
+    protected $fillable=['railway','rake_num','despatch'];
     protected $hidden=['id','created_at','updated_at'];
     public function coaches()
     {

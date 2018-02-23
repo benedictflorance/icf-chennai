@@ -34,6 +34,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	Route::post('rakes/edit', 'RakeController@edit');
 	Route::post('rakes/{rake_num}/delete', 'RakeController@delete');
 	Route::post('rakes/getall', 'RakeController@getAll');
+	Route::post('rakes/despatched', 'RakeController@getDespatched');
 	Route::post('rakes/{rake_num}', 'RakeController@getByNumber' );
 	Route::post('rakes/{rake_num}/coaches','RakeController@getAllCoaches');
 	Route::post('rakes/{rake_num}/statuses','RakeController@getAllStatuses');
