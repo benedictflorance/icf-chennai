@@ -45,7 +45,7 @@ Path                               |  Description
 `/api/coaches/{coach_num}`         | Route for getting a coach by its number
 `/api/coaches/{coach_num}/status`  | Route for getting the status of a coach
 `/api/coaches/{coach_num}/position`| Route for getting the position of a coach
-`/api/status/new`                  | Route for adding a new status/editing an existing status of a coach
+`/api/status/new/{field_name}`                  | Route for adding a new status/editing an existing status of a coach
 `/api/status/getall`               | Route for getting all the statuses
 `/api/position/new`                | Route for adding a new position/editing an existing position of a coach
 `/api/position/getall`             | Route for getting all the positions
@@ -600,12 +600,14 @@ Path                               |  Description
     },
     "status": 200
     }
-### POST /api/status/new
+### POST /api/status/new/{field_name}
 > All date formats must be yyyy-mm-dd
 
-> This route is used both for adding a new status and editing an existing status
+> Replace {field_name} with the field name you want to update. Field name must be in lower case. 
 
-> `coach_num` is required. Out of the other 29 parameters, at least one parameter must be sent in the request.
+> This route is used for editing an existing status
+
+> `coach_num` is required. Only one parameter can be updated at a time.
 
 #### Parameters
      {
