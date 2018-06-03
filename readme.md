@@ -45,7 +45,8 @@ Path                               |  Description
 `/api/coaches/{coach_num}`         | Route for getting a coach by its number
 `/api/coaches/{coach_num}/status`  | Route for getting the status of a coach
 `/api/coaches/{coach_num}/position`| Route for getting the position of a coach
-`/api/status/new/{field_name}`                  | Route for adding a new status/editing an existing status of a coach
+`/api/status/new`                   | Route for adding a new status of a coach
+`/api/status/edit/{field_name}`    | Route for editing an existing status of a coach
 `/api/status/getall`               | Route for getting all the statuses
 `/api/position/new`                | Route for adding a new position/editing an existing position of a coach
 `/api/position/getall`             | Route for getting all the positions
@@ -600,7 +601,64 @@ Path                               |  Description
     },
     "status": 200
     }
-### POST /api/status/new/{field_name}
+
+### POST /api/status/new
+> All date formats must be yyyy-mm-dd
+
+> This route is used only for adding a new statuses
+
+> `coach_num` is required. Out of the other 29 parameters, at least one parameter must be sent in the request.
+
+#### Parameters
+     {
+            "token": string,
+            "coach_num": string,
+            "shell_rec": date/null,
+            "intake": date/null,
+            "agency": string/null,
+            "conduit": date/null,
+            "coupler": date/null,
+            "ew_panel": date/null,
+            "roof_tray": date/null,
+            "ht_tray": date/null,
+            "ht_equip": date/null,
+            "high_dip": date/null,
+            "uf_tray": date/null,
+            "uf_trans": date/null,
+            "uf_wire": string/null,
+            "off_roof": date/null,
+            "roof_clear": date/null,
+            "off_ew": date/null,
+            "ew_clear": date/null,
+            "mech_pan": string/null,
+            "off_tf": date/null,
+            "tf_clear": date/null,
+            "tf_prov": date/null,
+            "lf_load": date/null,
+            "off_pow": date/null,
+            "power_hv": date/null,
+            "off_dip": date/null,
+            "dip_clear": date/null,
+            "lower": date/null,
+            "off_cont": date/null,
+            "cont_hv": date/null,
+            "load_test": date/null,
+            "rmvu": date/null,
+            "panto": date/null,
+            "pcp_clear": date/null,
+            "bu_form": date/null,
+            "rake_form": date/null,
+            "remarks": string/null,
+    }
+#### Response
+    {
+    "data": {
+        "message": string
+    },
+    "status": 200
+    }
+
+### POST /api/status/edit/{field_name}
 > All date formats must be yyyy-mm-dd
 
 > Replace {field_name} with the field name you want to update. Field name must be in lower case. 
@@ -657,13 +715,13 @@ Path                               |  Description
     },
     "status": 200
     }
-  ### POST /api/status/getall
+### POST /api/status/getall
   > Considering only two statuses
-  #### Parameters
+#### Parameters
      {
      "token": string,
      }
-  #### Response
+#### Response
     {
     "data": [
         {
