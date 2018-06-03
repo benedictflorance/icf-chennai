@@ -14,7 +14,7 @@ use App\Position;
 class StatusController extends Controller
 {
     //
-	public function store(Request $request){
+	public function store($field_name, Request $request){
 		try{
 			$rules=[
 				'coach_num' => 'required|max:15',
@@ -56,10 +56,6 @@ class StatusController extends Controller
 				'remarks'=> 'string|max:65534',
 
 			];
-			$fields=collect(['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks']);
-			foreach ($fields as $field) {
-				$rules[$field].= '|required_without_all:' . implode(',', $fields->whereNotIn(null, [$field])->toArray());
-			}
 			$validator = Validator::make($request->all(),$rules);
 			if($validator->fails())
 			{
@@ -79,9 +75,24 @@ class StatusController extends Controller
 						$status = CoachStatus::where('coach_id',$coach_id)->first();
 						if($status)
 						{
-							$data = $request->only(['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks']);
-							CoachStatus::where('coach_id',$coach_id)->first()->update($data);
-							$message="Status has been updated successfully for ".$coach->coach_num;
+							$field_names = ['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks'];
+							
+							if(in_array($field_name, $field_names))
+							{
+								CoachStatus::where('coach_id',$coach_id)->first()->update([$field_name => $request->input($field_name)]);
+								$message="Status has been updated successfully for ".$coach->coach_num;
+							}
+							else
+							{
+								$errors[]=[
+									'title' => 'Field Name does not exist',
+								];
+								return  response([
+									'errors' => $errors,
+									'status' => 400,
+								]);	
+							}
+
 						}
 						else
 						{

@@ -49,7 +49,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 	Route::post('coaches/{coach_num}/status', 'CoachController@getStatus');
 	Route::post('coaches/{coach_num}/position', 'CoachController@getPosition');
 	//Coach Status Routes
-	Route::post('status/new', 'StatusController@store');
+	Route::post('status/new/{field_name}', 'StatusController@store');
 	Route::post('status/getall', 'StatusController@getAll');
 	//Coach Position Routes
 	Route::post('position/new', 'PositionController@store');
