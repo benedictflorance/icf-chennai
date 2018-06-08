@@ -14,7 +14,7 @@ use App\Position;
 class StatusController extends Controller
 {
     //
-    	public function store(Request $request){
+	public function store(Request $request){
 		try{
 			$rules=[
 				'coach_num' => 'required|max:15',
@@ -75,9 +75,19 @@ class StatusController extends Controller
 					if($coach)
 					{
 						$coach_id=$coach->id;
-						$data = array_merge($request->only(['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks']), ['coach_id' => $coach_id]);
-						CoachStatus::create($data);
-						$message="Status has been added successfully for ".$coach->coach_num;
+						$status = CoachStatus::where('coach_id',$coach_id)->first();
+						if($status)
+						{
+							$data = $request->only(['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks']);
+							CoachStatus::where('coach_id',$coach_id)->first()->update($data);
+							$message="Status has been updated successfully for ".$coach->coach_num;
+						}
+						else
+						{
+							$data = array_merge($request->only(['shell_rec','intake','agency','conduit','coupler','ew_panel','roof_tray','ht_tray','ht_equip','high_dip','uf_tray','uf_trans','uf_wire','off_roof','roof_clear','off_ew','ew_clear','mech_pan','off_tf','tf_clear','tf_prov','lf_load','off_pow','power_hv','off_dip','dip_clear','lower','off_cont','cont_hv','load_test','rmvu','panto','pcp_clear','bu_form','rake_form','remarks']), ['coach_id' => $coach_id]);
+							CoachStatus::create($data);
+							$message="Status has been added successfully for ".$coach->coach_num;
+						}
 						$data=['message' => $message];
 						$status=200;
 						return response(["data" => $data, "status" => $status]);
@@ -111,8 +121,7 @@ class StatusController extends Controller
 			return response(["errors" => $errors,
 				"status" => 500]);
 		}
-	} 
-
+	}     
 	public function edit($field_name, Request $request){
 		try{
 			$rules=[

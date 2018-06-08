@@ -31,7 +31,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 
 	//Rake Routes
 	Route::post('rakes/new', 'RakeController@store');
-	Route::post('rakes/edit', 'RakeController@edit');
+	Route::post('rakes/edit/{field_name}', 'RakeController@edit');
 	Route::post('rakes/{rake_num}/delete', 'RakeController@delete');
 	Route::post('rakes/getall', 'RakeController@getAll');
 	Route::post('rakes/despatched', 'RakeController@getDespatched');
@@ -42,7 +42,7 @@ Route::group(['middleware'=>'checkToken', 'namespace'=>'api'],function(){
 
 	//Coach Routes
 	Route::post('coaches/new', 'CoachController@store');
-	Route::post('coaches/edit', 'CoachController@edit');
+	Route::post('coaches/edit/{field_name}', 'CoachController@edit');
 	Route::post('coaches/{coach_num}/delete', 'CoachController@delete');
 	Route::post('coaches/getall', 'CoachController@getAll');
 	Route::post('coaches/{coach_num}', 'CoachController@getByNumber' );

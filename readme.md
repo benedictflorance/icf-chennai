@@ -32,14 +32,14 @@ Path                               |  Description
 `/api/user/editprofile`            | User Route for editing his/her profile
 `/api/rakes/new`                   | Route for adding a new rake
 `/api/rakes/getall`                | Route for getting all the rakes
-`api/rakes/edit`                   | Route for editing a particular rake
+`api/rakes/edit/{field_name}`      | Route for editing a particular rake
 `api/rakes/delete`                 | Route for deleting a particular rake
 `/api/rakes/{rake_num}`            | Route for getting a rake by it's number
 `/api/rakes/{rake_num}/coaches`    | Route for getting all the coaches of a rake number
 `/api/rakes/{rake_num}/statuses`   | Route for getting the statuses of all the coaches of a rake
 `/api/rakes/{rake_num}/positions`  | Route for getting the positions of all the coaches of a rake
 `/api/coaches/new`                 | Route for adding a new coach
-`api/coaches/edit`                 | Route for editing a particular coach
+`api/coaches/edit/{field_name}`    | Route for editing a particular coach
 `api/coaches/delete`               | Route for deleting a particular coach
 `/api/coaches/getall`              | Route for getting all the coaches
 `/api/coaches/{coach_num}`         | Route for getting a coach by its number
@@ -225,6 +225,7 @@ Path                               |  Description
      "token": string,
      "railway": string,
      "rake_num": string,
+     "despatch": string
      }
 #### Response
     {
@@ -233,18 +234,21 @@ Path                               |  Description
     },
     "status": 200
     }
-### POST /api/rakes/edit
+### POST /api/rakes/edit/{field_name}
 > Only "write" and "admin" role users can edit rakes
+
+> Replace {field_name} with the field name you want to update. Field name must be in lower case. 
 
 > `old_rakenum` stands for the rake to be edited and it is required.
 
-> Out of `railway` and `rake_num`, atleast one paramater is required for editing.
+> Only one parameter can be updated at a time.
 #### Parameters
     {
      "token": string,
      "old_rakenum": string,
      "railway": string,
      "rake_num": string,
+     "despatch": date
      }
 #### Response
     {
@@ -462,12 +466,14 @@ Path                               |  Description
     },
     "status": 200
     }
-### POST /api/coaches/edit
+### POST /api/coaches/edit/{field_name}
 > Only "write" and "admin" role users can edit coaches
+
+> Replace {field_name} with the field name you want to update. Field name must be in lower case. 
 
 > `old_coachnum` stands for the coach to be edited and is required.
 
-> Out of the other three parameters, atleast one paramater is required for editing.
+> Only one parameter can be updated at a time
 #### Parameters
     {
      "token": string,

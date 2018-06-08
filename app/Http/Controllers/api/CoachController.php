@@ -83,14 +83,14 @@ class CoachController extends Controller
 				"status" => 500]);
 		}       
 	}
-	public function edit(Request $request)
+	public function edit($field_name, Request $request)
 	{
 		try{
 			$validator = Validator::make($request->all(),[
 				'old_coachnum' => 'required|max:15',
-				'coach_num' => 'required_without_all:rake_num,type|max:15|unique:coaches,coach_num',
-				'rake_num' => 'required_without_all:coach_num,type|max:15',
-				'type' => 'required_without_all:coach_num,rake_num|max:15'
+				'coach_num' => 'nullable|max:15|unique:coaches,coach_num',
+				'rake_num' => 'nullable|max:15',
+				'type' => 'nullable|max:15'
 			]);
 			if($validator->fails())
 			{
@@ -109,6 +109,7 @@ class CoachController extends Controller
 							$rake_num = $request->input('rake_num');
 							$coach_num = $request->input('coach_num');
 							$type = $request->input('type');
+							$field_names = ['coach_num', 'rake_num', 'type'];
 							if($rake_num)
 								{
 									$rake = Rake::where('rake_num',$rake_num)->first();
@@ -129,7 +130,24 @@ class CoachController extends Controller
 							{
 								$rake_id = $coach->rake_id;
 							}
-							$coach->update(array_merge($request->only(['coach_num','type']), ['rake_id' => $rake_id]));
+							if(in_array($field_name, $field_names))
+							{
+								if($field_name != 'rake_num')
+								Coach::where('id',$coach->id)->first()->update([$field_name => $request->input($field_name)]);
+								else
+								Coach::where('id',$coach->id)->first()->update(['rake_id' => $rake_id]);
+								$message="Coach details has been updated successfully for ".$coach->coach_num;
+							}
+							else
+							{
+								$errors[]=[
+									'title' => 'Field Name does not exist',
+								];
+								return  response([
+									'errors' => $errors,
+									'status' => 400,
+								]);	
+							}
 							$message="Coach details have been updated";
 							$data=['message' => $message];
 							$status=200;

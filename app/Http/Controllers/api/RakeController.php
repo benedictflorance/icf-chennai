@@ -62,14 +62,14 @@ class RakeController extends Controller
 				"status" => 500]);
 		}       
 	}
-	public function edit(Request $request)
+	public function edit($field_name, Request $request)
 	{
 		try{
 			$validator = Validator::make($request->all(),[
 				'old_rakenum' => 'required|max:15',
-				'railway' => 'required_without_all:rake_num,despatch|max:15',
-				'rake_num' => 'required_without_all:railway,despatch|max:15|unique:rakes,rake_num',
-				'despatch' => 'required_without_all:railway,rake_num|date_format:Y-m-d'
+				'railway' => 'nullable|max:15',
+				'rake_num' => 'nullable|max:15|unique:rakes,rake_num',
+				'despatch' => 'nullable|date_format:Y-m-d'
 			]);
 			if($validator->fails())
 			{
@@ -85,7 +85,22 @@ class RakeController extends Controller
 					$rake=Rake::where('rake_num',$request->input('old_rakenum'))->first();
 					if($rake)
 						{
-							$rake->update($request->only(['railway', 'rake_num', 'despatch']));
+							$field_names = ['railway', 'rake_num', 'despatch'];
+							if(in_array($field_name, $field_names))
+							{
+								Rake::where('id',$rake->id)->first()->update([$field_name => $request->input($field_name)]);
+								$message="Rake details has been updated successfully for ".$rake->coach_num;
+							}
+							else
+							{
+								$errors[]=[
+									'title' => 'Field Name does not exist',
+								];
+								return  response([
+									'errors' => $errors,
+									'status' => 400,
+								]);	
+							}
 							$message="Rake details have been updated";
 							$data=['message' => $message];
 							$status=200;
